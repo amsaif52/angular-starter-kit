@@ -20,8 +20,9 @@
     <!-- load our angular app with systemjs -->
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script>
-        System.import('app').catch(function(err) { console.error(err); });
+        System.import('./dist/main.min.js').catch(function(err) { console.error(err); });
     </script>
 </head>
 <body class="container">

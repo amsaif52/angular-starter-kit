@@ -8,7 +8,8 @@ const gulp = require('gulp'),
 	  uglify = require('gulp-uglify'),
 	  sourcemaps = require('gulp-sourcemaps'),
 	  runSequence = require('run-sequence'),
-	  systemjsBuilder = require('systemjs-builder');
+	  systemjsBuilder = require('systemjs-builder'),
+      rename = require('gulp-rename');
 
 gulp.task('clean', () => {
 	return del('dist');
@@ -29,14 +30,15 @@ gulp.task('build:client', () => {
 
 gulp.task('bundle:app', () => {
 	var builder = new systemjsBuilder('','./systemjs.config.js');
-	return builder.buildStatic('app','dist/main.js')
+	return builder.buildStatic('app','dist/main.js');
 })
 
 gulp.task('minify:js', function() {
   return gulp
     .src('dist/main.js')
     .pipe(uglify())
-    .pipe(gulp.dest('dist/'));
+    .pipe(rename('main.min.js'))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build', ()=>{

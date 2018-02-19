@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build" :"clear && gulp && npm run dev",
+    "build": "clear && gulp && npm run dev",
     "dev": "lite-server"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-ng-annotate": "^2.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "^4.0.1",
     "gulp-uglify": "^3.0.0",
