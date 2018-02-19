@@ -8,6 +8,9 @@ const gulp = require('gulp'),
 	  uglify = require('gulp-uglify'),
 	  sourcemaps = require('gulp-sourcemaps'),
 	  runSequence = require('run-sequence'),
+      sass = require("gulp-sass"),
+      minifycss = require('gulp-minify-css'),
+      htmlmin = require('gulp-htmlmin'),
 	  systemjsBuilder = require('systemjs-builder'),
       rename = require('gulp-rename');
 
@@ -31,18 +34,31 @@ gulp.task('build:client', () => {
 gulp.task('bundle:app', () => {
 	var builder = new systemjsBuilder('','./systemjs.config.js');
 	return builder.buildStatic('app','dist/main.js');
-})
+});
+
+gulp.task("sass", function () {
+    gulp.src("app/**/*.scss")
+        .pipe(sass())
+        .pipe(minifycss())
+        .pipe(gulp.dest('dist/app'));
+});
+
+gulp.task('minify', function() {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist/app'));
+});
 
 gulp.task('minify:js', function() {
   return gulp
     .src('dist/main.js')
     .pipe(uglify())
-    .pipe(rename('main.min.js'))
+    .pipe(rename('bundle.js'))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build', ()=>{
-	runSequence('clean', 'build:client','bundle:app', 'minify:js');	
+	runSequence('clean', 'sass','build:client', 'bundle:app', 'minify:js');	
 });
 
 gulp.task('default', ['build']);
